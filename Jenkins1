@@ -3,10 +3,15 @@ pipeline {
     agent { dockerfile true }
 
     stages {
-        stage('Hello') {
+        stage('Update') {
             steps {
-                checkout([$class: 'SubversionSCM', locations: [[credentialsId: 'marconi-svn', local: '.', remote: 'https://svn.schmid.dk/svn/universe/trunk']]])
+                checkout([$class: 'SubversionSCM', locations: [[credentialsId: 'marconi-svn', local: '.', remote: 'https://svn.schmid.dk/svn/universe/trunk/unity']]])
                 echo 'Hello World'
+            }
+        }
+        stage('Build') {
+            steps{
+                sh 'unity-editor -batchmode -buildTarget Win64 -projectPath ./UniverseUnity/ -executeMethod BuildSystem.BuildScenarioFromCommand -logFile test-windows-log.txt -buildId test-build -scenario scenario_win_quick -quit'
             }
         }
     }
