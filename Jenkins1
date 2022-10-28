@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-                sh 'svn checkout https://svn.schmid.dk/svn/universe/trunk'
+                checkout([$class: 'SubversionSCM', locations: [[credentialsId: 'marconi-svn', local: '.', remote: 'https://svn.schmid.dk/svn/universe/trunk']]])
                 echo 'Hello World'
             }
         }
