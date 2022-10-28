@@ -1,9 +1,11 @@
 pipeline {
+    // syntax https://www.jenkins.io/doc/book/pipeline/syntax/#agent
     agent { dockerfile true }
 
     stages {
         stage('Hello') {
             steps {
+                sh 'svn checkout https://svn.schmid.dk/svn/universe/trunk'
                 echo 'Hello World'
             }
         }
