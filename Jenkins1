@@ -1,6 +1,9 @@
 pipeline {
     // syntax https://www.jenkins.io/doc/book/pipeline/syntax/#agent
-    agent { dockerfile true }
+    agent { 
+        dockerfile true 
+        // missing defining a volume so that we don't need to do a checkout every time
+        }
 
     stages {
         stage('Update') {
@@ -11,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps{
-                sh 'unity-editor -batchmode -buildTarget Win64 -projectPath ./UniverseUnity/ -executeMethod BuildSystem.BuildScenarioFromCommand -logFile test-windows-log.txt -buildId test-build -scenario scenario_win_quick -quit'
+                sh 'sudo unity-editor -batchmode -buildTarget Win64 -projectPath ./UniverseUnity/ -executeMethod BuildSystem.BuildScenarioFromCommand -logFile test-windows-log.txt -buildId test-build -scenario scenario_win_quick -quit'
             }
         }
     }
